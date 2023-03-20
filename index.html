@@ -10,16 +10,15 @@
 <body>
     <div id="shopping-list">
         <h1>{{header || "Welcome"}}</h1>
-        <input v-model="newItem" type="text" placeholder="Add an item">
-        <label>
-            Priority
-            <select v-model="newItemPriority">
-                <option value="low">Low</option>
-                <option value="high">High</option>
-            </select>
-        </label>
-        <br>
-        {{newItem}} {{newItemPriority}}
+        <div class="add-item-form">
+            <input @keyup.enter="saveItem" v-model="newItem" type="text" placeholder="Add an item">
+            <label>
+                <input type="checkbox" v-model="newItemHighPriority">
+                High Priority
+            </label>
+            <button v-if="editing" @click="saveItem" class="btn btn-primary">Save Item</button>
+        </div>
+        <p v-if="item.length === 0">Nice job! You've bought all your items!</p>
         <ul>
             <li v-for="item in items" :key="item.id">{{item.label}}</li>
         </ul>
@@ -30,13 +29,24 @@
             data() {
                 return {
                     header: "Shopping List App",
+                    w
                     newItem: '',
-                    newItemPriority: 'low',
+                    newItemHighPriority: false,
                     items: [
-                        { id: 1, label: "10 party hats" },
-                        { id: 2, label: "2 boards games" },
-                        { id: 3, label: "20 cups" },
+                        // { id: 1, label: "10 party hats" },
+                        // { id: 2, label: "2 boards games" },
+                        // { id: 3, label: "20 cups" },
                     ]
+                }
+            },
+            methods: {
+                saveItem() {
+                    this.items.push({ id: this.items.length + 1, label: this.newItem })
+                    this.newItem = ""
+                }
+                doEdit(editing) {
+                    this.editing = editing
+                    this.newItem = ""
                 }
             }
         })
@@ -45,3 +55,6 @@
 </body>
 
 </html>
+
+<!-- 
+ https://vueschool.io/lessons/conditional-rendering-in-vue-3 -->
