@@ -16,7 +16,6 @@
         </div>
         <div v-if="editing" class="add-item-form">
             <input @keyup.enter="saveItem" type="text" v-model="newItem" placeholder="Add an item">
-            <p class="counter">{{characterCount}}/200</p>
             <label>
                 <input type="checkbox" v-model="newItemHighPriority">
                 High Priority
@@ -27,13 +26,9 @@
         </div>
         <p v-if="items.length === 0">Nice job! You've bought all your items!</p>
         <ul>
-            <li 
-            v-for="item in items" 
-            @click="togglePurchased(item)"
-            :key="item.id"
-            :class="{strikeout: item.purchased, priority: item.highPriority}"
-            class="static-class"
-            >{{item.label}}</li>
+            <li v-for="item in reversedItems" @click="togglePurchased(item)" :key="item.id"
+                :class="{strikeout: item.purchased, priority: item.highPriority}" class="static-class">{{item.label}}
+            </li>
 
         </ul>
     </div>
@@ -53,19 +48,24 @@
                     ]
                 }
             },
+            computed: {
+                reversedItems() {
+                    return [...this.items].reverse()
+                }
+            },
             methods: {
                 saveItem() {
                     this.items.push({ id: this.items.length + 1, label: this.newItem, highPriority: this.newItemHighPriority })
                     this.newItem = ""
-                    this.newItemHighPriority= ""
+                    this.newItemHighPriority = ""
                 },
                 doEdit(editing) {
                     this.editing = editing
                     this.newItem = ""
-                    this.newItemHighPriority=""
-                }, 
-                togglePurchased(item){
-item.purchased = !item.purchased
+                    this.newItemHighPriority = ""
+                },
+                togglePurchased(item) {
+                    item.purchased = !item.purchased
                 }
             }
         })
@@ -76,4 +76,4 @@ item.purchased = !item.purchased
 </html>
 
 <!-- 
- https://vueschool.io/lessons/conditional-rendering-in-vue-3 -->
+ https://vueschool.io/courses/vuejs-3-fundamentals -->
