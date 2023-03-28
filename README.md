@@ -4,7 +4,7 @@
 
 ## :dart:	Goals
 
-The project allows yo adding items to a list, adding a priority to it and cross off the finished ones.
+The project allows you adding items to a list, adding a priority to it and cross off the finished ones.
 
 <a href="https://ibb.co/rcJTK7z"><img src="https://i.ibb.co/WP1qNxM/Untitled.png" alt="Untitled" border="0"></a>
 
